@@ -139,6 +139,9 @@ def main():
         output_path = os.path.normpath(os.path.join(processed_dir, 'model_ready_data.csv'))
         
         if not os.path.exists(input_path):
+
+
+
             raise FileNotFoundError(f"Input file not found at {input_path}")
         data = pd.read_csv(input_path)
         
@@ -147,7 +150,7 @@ def main():
         pipeline = build_feature_pipeline()
         processed_data_array = pipeline.fit_transform(data) 
         
-        # Get column names from the final ColumnTransformer step to match the array output.
+        # Get column names from the final ColumnTransformer step to match the array output!!
         all_feature_names = pipeline.named_steps['final_preprocessing'].get_feature_names_out()
         
         processed_df = pd.DataFrame(processed_data_array, columns=all_feature_names)
@@ -155,6 +158,9 @@ def main():
         
         print(f"\nData successfully processed and saved to:\n{output_path}")
         print(f"Shape of processed data: {processed_df.shape}")
+
+
+
         print(f"Columns in output: {processed_df.columns.tolist()}")
         
         # Check and print distribution for the 'is_high_risk' column (prefixed by ColumnTransformer).
