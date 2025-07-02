@@ -142,7 +142,8 @@ def train_models():
                 print(f"DEBUG: Starting GridSearchCV fit for {model_name}...")
                 grid_search.fit(X_train, y_train)
                 print(f"DEBUG: GridSearchCV fit completed for {model_name}.")
-       
+                
+                # Get the best estimator from GridSearchCV.
                 model = grid_search.best_estimator_
                 y_pred = model.predict(X_test)
                 y_proba = model.predict_proba(X_test)[:, 1] 
@@ -170,7 +171,8 @@ def train_models():
                         "metrics": metrics,
                         "run_id": run.info.run_id 
                     }
- 
+        
+        # Save the best model locally and register it in MLflow Model Registry.
         if best_model_overall:
             os.makedirs('../models', exist_ok=True)
             joblib.dump(best_model_overall['estimator'], '../models/best_model.pkl')
